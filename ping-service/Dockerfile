@@ -1,6 +1,4 @@
-FROM mhart/alpine-node:6.9.4
-
-RUN apk add --no-cache make gcc g++ python git iputils drill net-tools bash
+FROM node:6.9.4-alpine
 
 # Create app directory
 RUN mkdir -p /home/app
@@ -17,7 +15,5 @@ RUN cd ping-service && npm install;
 
 # Bundle app source
 COPY . /home/app/ping-service
-
-EXPOSE 39999
 
 CMD cd ping-service ; npm start

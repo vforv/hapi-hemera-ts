@@ -1,4 +1,4 @@
-import * as Hemera from 'nats-hemera';
+const Hemera = require('nats-hemera');
 import { PingActions } from './actions/ping.actions';
 
 

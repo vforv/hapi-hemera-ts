@@ -1,34 +1,30 @@
 version: '3'
 
 services:
-  bases:
-    build: ../../bases-service
-    network_mode: "host"
-    environment:
-      HOST: 127.0.0.1
-      REGISTRY: 127.0.0.1
-    volumes:
-        - ./test:/home/app/test
-    command: bash -c "cd bases-service && npm start"
+  nats:
+    build:
+      context: "../../nats"
+    expose:
+      - "4222"
+    ports:
+      - "4222:4222"
+      - "8222:8222"
+    hostname: nats-server
   api:
     build: ../../api-gateway
-    network_mode: "host"
     ports:
         - "5000:5000"
     environment:
-       HOST: 127.0.0.1
-       BASES: 127.0.0.1
-       REGISTRY: 127.0.0.1
+       NATS_URL: nats://nats:4222
+       NATS_USER: ruser
+       NATS_PW: T0pS3cr3t
     volumes:
         - ./test:/home/app/test
-    command: bash -c "cd api-gateway && npm start"
   ping:
     build: ../../ping-service
-    network_mode: "host"
     environment:
-       HOST: 127.0.0.1
-       BASES: 127.0.0.1
-       REGISTRY: 127.0.0.1
+       NATS_URL: nats://nats:4222
+       NATS_USER: ruser
+       NATS_PW: T0pS3cr3t
     volumes:
         - ./test:/home/app/test
-    command: bash -c "cd ping-service && npm start"
