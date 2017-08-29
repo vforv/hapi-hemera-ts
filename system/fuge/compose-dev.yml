@@ -1,0 +1,23 @@
+fuge_global:
+  tail: true
+  monitor: true
+  monitor_excludes:
+    - '**/node_modules/**'
+    - '**/.git/**'
+    - '*.log'
+api:
+  type: process
+  path: ../../api-gateway
+  environment:
+       NATS_URL: nats://localhost:4222
+       NATS_USER: ruser
+       NATS_PW: T0pS3cr3t
+  run: ts-node main.ts
+ping:
+  type: process
+  path: ../../ping-service
+  environment:
+       NATS_URL: nats://localhost:4222
+       NATS_USER: ruser
+       NATS_PW: T0pS3cr3t
+  run: ts-node service.ts
