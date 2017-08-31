@@ -5,6 +5,7 @@
   "main": "server.ts",
   "scripts": {
     "fuge": "fuge shell fuge/compose-dev.yml",
+    "nats": "docker-compose -f ./fuge/nats.yml up -d",
     "fuge:built": "fuge shell fuge/compose-built.yml",
     "init": "./init.sh",
     "build": "./build.sh && npm run copyjson && npm run copysys",

@@ -21,19 +21,19 @@ export const Modlues: any = [
     },
     {
         register: require('hapi-hemera'),
-        options: {
-            hemera: {
-                name: 'test',
-                // logLevel: process.env.HEMERA_LOG_LEVEL,
-                childLogger: true,
-                tag: 'hemera-1'
-            },
-            nats: {
-                'url': process.env.NATS_URL,
-                'user': process.env.NATS_USER,
-                'pass': process.env.NATS_PW
-            }
-        }
+        // options: {
+        //     hemera: {
+        //         name: 'test',
+        //         // logLevel: process.env.HEMERA_LOG_LEVEL,
+        //         childLogger: true,
+        //         tag: 'hemera-1'
+        //     },
+        //     nats: {
+        //         'url': process.env.NATS_URL,
+        //         'user': process.env.NATS_USER,
+        //         'pass': process.env.NATS_PW
+        //     }
+        // }
     },
     {
         register: Swagger

@@ -1,71 +1,49 @@
 import * as lab from 'lab';
 import * as code from 'code';
 import * as sinon from 'sinon';
-import * as Seneca from 'seneca';
-import { PingLogic } from '../logic/ping.logic';
 import * as Moment from 'moment';
+import * as Hemera from 'nats-hemera';
+import { PingActions } from '../actions/ping.actions';
+const Nats = require('hemera-testsuite/natsStub')
+const ActStub = require('hemera-testsuite/actStub')
+const AddStub = require('hemera-testsuite/addStub')
 
 
-const ping = new PingLogic
 
 const L = exports.lab = lab.script();
 const expect = code.expect;
 
+//FOR UNIT TESTS STUB HEMERA INSTANCE
+const PORT = 4222
+const noAuthUrl = 'nats://localhost:' + PORT
+let server: any;
 
-L.before((done) => {
-    done();
-});
 
 
 L.experiment('Ping action', () => {
 
-    L.test('Ping acction test timestamp', (done) => {
-        const seneca = test_seneca();
-
-        seneca.act(
-            {
-                role: 'ping',
-                cmd: 'date',
-                format: 'timestamp'
-            },
-            (err: any, out: any): any => {
-                let d = Date.now();
-
-                expect(d).to.equal(out.date)
-                
-                done();
-            });
-    });
-
     L.test('Ping acction test moment formated time', (done) => {
-        const seneca = test_seneca();
+        const nats = new Nats()
+        const hemera = new Hemera(nats, {
+            logLevel: 'info'
+        })
+        const ping = new PingActions(hemera)
 
-        seneca.act(
-            {
-                role: 'ping',
-                cmd: 'date',
-                format: 'formated'
-            },
-            (err: any, out: any): any => {
+        const actStub = new ActStub(hemera);
+        hemera.ready(() => {
+            //add actions
+            ping.getPingAction();
+
+            //run test
+            AddStub.run(hemera, { topic: 'ping', cmd: 'date' }, { format: 'formated' }, function (err: any, result: any) {
+                expect(err).to.be.not.exists()
                 let d = Moment().format('MMMM Do YYYY, h:mm:ss a');
 
-                expect(d).to.equal(out.date)
-                
-                done();
-            });
+                expect(result.date).to.be.equals(d)
+                done()
+            })
+
+        });
     });
+
 });
-
-
-// Construct a Seneca instance suitable for unit testing
-function test_seneca() {
-    return Seneca({ log: 'test' })
-
-        // activate unit test mode. Errors provide additional stack tracing context.
-        // The fin callback is called when an error occurs anywhere.
-        // .test(fin)
-
-
-        // Load the microservice business logic
-        .use(ping.getPing)
-}

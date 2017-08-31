@@ -18,6 +18,8 @@
   "license": "ISC",
   "dependencies": {
     "@types/moment": "^2.13.0",
+    "@types/nats-hemera": "^1.0.0",
+    "hemera-testsuite": "^1.2.0",
     "moment": "^2.18.1",
     "nats": "^0.7.20",
     "nats-hemera": "^1.5.6",
@@ -28,7 +30,6 @@
     "@types/lab": "^11.1.0",
     "@types/node": "^8.0.25",
     "@types/pino": "^4.7.0",
-    "@types/seneca": "^2.1.7",
     "@types/sinon": "^2.3.3",
     "code": "^4.1.0",
     "copyfiles": "^1.2.0",

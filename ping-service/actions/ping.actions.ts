@@ -1,11 +1,10 @@
-// import * as Hemera from 'nats-hemera';
+import * as Hemera from 'nats-hemera';
 import { PingLogic } from '../logic/ping.logic';
 
 const ping = new PingLogic;
 
 export class PingActions {
-    //PUT HEMERA INSTANCE INSTEAD ANY AFTER @types file added
-    constructor(private hemera: any) {}
+    constructor(private hemera: Hemera) {}
 
     getPingAction() {
         this.hemera.add({

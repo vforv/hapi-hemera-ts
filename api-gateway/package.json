@@ -17,6 +17,7 @@
   "author": "Vladimir Djukic",
   "license": "ISC",
   "dependencies": {
+    "@types/nats-hemera": "^1.0.0",
     "blipp": "^2.3.0",
     "boom": "^5.2.0",
     "chairo": "^3.0.0",
@@ -27,6 +28,7 @@
     "hapi": "^16.5.0",
     "hapi-hemera": "^0.2.2",
     "hapi-swagger": "^7.7.0",
+    "hemera-testsuite": "^1.2.0",
     "inert": "^4.2.1",
     "joi": "^10.6.0",
     "labbable": "^2.1.1",
@@ -42,7 +44,6 @@
     "@types/lab": "^11.1.0",
     "@types/nconf": "0.0.34",
     "@types/node": "^8.0.16",
-    "@types/seneca": "^2.1.7",
     "@types/sinon": "^2.3.3",
     "code": "^4.1.0",
     "copyfiles": "^1.2.0",

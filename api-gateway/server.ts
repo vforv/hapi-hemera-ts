@@ -3,16 +3,8 @@ import { getServerConfigs } from './environments';
 import * as Hapi from 'hapi';
 import { HapiServer } from './sever-types';
 import { Modlues } from './modules/index';
+import * as Hemera from 'nats-hemera';
 
-const Hemera = require('nats-hemera')
-const nats = require('nats').connect({
-    'url': process.env.NATS_URL,
-    'user': process.env.NATS_USER,
-    'pass': process.env.NATS_PW
-})
-
-
-const hemera = new Hemera(nats, { logLevel: 'info' })
 
 export class StartServer {
     public server: HapiServer = new Hapi.Server() as HapiServer;
@@ -28,8 +20,19 @@ export class StartServer {
         });
     }
 
+    private getInstance(): Hemera {
+        const nats = require('nats').connect({
+            'url': process.env.NATS_URL,
+            'user': process.env.NATS_USER,
+            'pass': process.env.NATS_PW
+        })
+
+
+        return new Hemera(nats, { logLevel: 'info' })
+    }
+
     public connectServer(env: boolean): void {
-        hemera.ready(() => {
+        this.getInstance().ready(() => {
             return this.server.register(Modlues, {
                 routes: {
                     prefix: '/v1'
@@ -39,7 +42,7 @@ export class StartServer {
                     if (err) {
                         throw err
                     }
-
+                    
                     this.server.initialize((err) => {
                         if (err) {
                             throw err;

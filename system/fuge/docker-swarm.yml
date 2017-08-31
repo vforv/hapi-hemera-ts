@@ -9,8 +9,6 @@ services:
     image: vforv/hemera-nats
     networks:
         - trifacta
-    expose:
-        - "4222"
     ports:
         - "4222:4222"
         - "8222:8222"
